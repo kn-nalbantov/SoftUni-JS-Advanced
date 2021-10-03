@@ -1,12 +1,15 @@
-function solution() { //UNFINISHED
+function solution() {
   const recipies = {
-    apple: { carb: 2 },
-    lemonade: { carb: 10, flavour: 20}
+    apple: { carbohydrate: 1, flavour: 2 },
+    lemonade: { carbohydrate: 10, flavour: 20 },
+    burger: { carbohydrate: 5, fat: 7, flavour: 3 },
+    eggs: { protein: 5, fat: 1, flavour: 1 },
+    turkey: { protein: 10, carbohydrate: 10, fat: 10, flavour: 10 },
   };
 
   const ingredients = {
     protein: 0,
-    carb: 0,
+    carbohydrate: 0,
     fat: 0,
     flavour: 0,
   };
@@ -17,15 +20,23 @@ function solution() { //UNFINISHED
   }
 
   function prepare(item, qty) {
-    //TODO
-    return {
-      item,
-      qty,
-    };
+    const remainingIng = {};
+
+    for (let ing in recipies[item]) {
+      const remaining = ingredients[ing] - recipies[item][ing] * Number(qty);
+      if (remaining < 0) {
+        return `Error: not enough ${ing} in stock`;
+      } else {
+        remainingIng[ing] = remaining;
+      }
+    }
+
+    Object.assign(ingredients, remainingIng);
+    return 'Success';
   }
 
   function report() {
-    return `protein=${ingredients.protein} carbohydrate=${ingredients.carb} fat=${ingredients.fat} flavour=${ingredients.flavour}`;
+    return `protein=${ingredients.protein} carbohydrate=${ingredients.carbohydrate} fat=${ingredients.fat} flavour=${ingredients.flavour}`;
   }
 
   function control(str) {
@@ -44,13 +55,4 @@ function solution() { //UNFINISHED
   return control;
 }
 
-let manager = solution();
-
-console.log('----');
-console.log(manager('report'));
-console.log('----');
-
-console.log(manager('restock fat 50'));
-console.log(manager('report'));
-
-console.log(manager('prepare lemonade 4'));
+// let manager = solution();
