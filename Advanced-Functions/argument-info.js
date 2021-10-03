@@ -10,9 +10,8 @@ function argementInfo(...args) {
     console.log(`${typeof arg}: ${arg}`);
   }
 
-  for (let type in types) {
-    console.log(`${type} = ${types[type]}`);
-  }
+  let sorted = Object.entries(types).sort((a, b) => b[1] - a[1]);
+  sorted.forEach((element) => {
+    console.log(`${element[0]} = ${element[1]}`);
+  });
 }
-
-// argementInfo({ name: 'bob' }, 399, 499);
