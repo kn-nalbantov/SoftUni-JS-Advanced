@@ -5,15 +5,11 @@ class Company {
   }
 
   addEmployee(name, salary, position, department) {
-    let typeChecking = [name, salary, position, department];
-    for (let param of typeChecking) {
-      if (param == '' || param == undefined || param == null) {
-        throw new Error('Invalid input');
-      }
+    if (!name || !position || !department || salary < 0) {
+      throw new Error('Invalid input!');
     }
-    if (salary < 0 || isNaN(Number(salary))) {
-      throw new Error('Invalid input');
-    }
+
+    salary = Number(salary);
 
     let entry = { name, salary, position };
 
